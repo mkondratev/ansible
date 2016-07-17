@@ -1,0 +1,50 @@
+[client]
+default-character-set = utf8
+
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+bind-address = 0.0.0.0
+port = 3306
+
+{% if '01' in inventory_hostname %}
+server-id = 1
+{% else %}
+server-id = 2
+{% endif %}
+
+log-bin = /var/log/mariadb/server-bin
+log-bin-index = /var/log/mariadb/server-bin.index
+ 
+relay-log = /var/log/mariadb/slave-relay-bin
+relay-log-index = /var/log/mariadb/slave-relay-bin.index
+
+replicate-do-db = wordpress_database
+
+binlog-ignore-db = information_schema
+binlog-ignore-db = mysql
+binlog-ignore-db = performance_schema
+
+replicate-ignore-db = mysql
+replicate-ignore-db = information_schema
+replicate-ignore-db = performance_schema
+
+auto_increment_offset = 10
+auto_increment_increment = 3
+
+sync_binlog = 1
+
+symbolic-links = 0
+
+sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+[mysqld_safe]
+log-error=/var/log/mariadb/mariadb.log
+pid-file=/var/run/mariadb/mariadb.pid
+
+
+#
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d

@@ -28,6 +28,55 @@
     - pacemaker 
     - pcs
     - psmisc
+    - mariadb-server
+    - MySQL-python
 
   - name: selinux -> permissive
     selinux: policy=targeted state={{ selinux_state }}
+
+  - name: check mariadb status
+    stat: path=/var/run/mariadb/mariadb.pid
+    register: mariadb_status
+
+  - name: sevice mariadb stop
+    service: name=mariadb state=stopped
+    when: mariadb_status.stat.exists
+
+  - name: upload config mariadb
+    template: src=my.cnf.j2 dest=/etc/my.cnf owner=root group=root
+
+  - name: copy .my.cnf file with root password credentials
+    template: src=root/my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
+
+  - name: enable and start mariadb/pcs service
+    service: name={{ item }} enabled=yes state=started
+    with_items:
+    - mariadb
+    - pcsd
+
+  - name: change pacemaker password
+    user: name={{ pacemaker_user }} password={{ pacemaker_password | password_hash( 'sha512', ansible_hostname ) }}
+
+  - name: update mysql root password
+    mysql_user: 
+     name: "{{ root_user }}"
+     host: "{{ item }}"
+     password: "{{ root_password }}"
+     login_user: "{{ root_user }}"
+     login_password: "{{ root_password }}"
+     check_implicit_admin: "yes" 
+     priv: "*.*:ALL,GRANT" 
+     state: "present"
+    with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost 
+
+  - name: add mysql user replicator
+    mysql_user:
+     name: "{{ repl_user }}"
+     host: "%"
+     password: "{{ repl_pass }}"
+     priv: "*.*:replication slave"
+     state: "present"
