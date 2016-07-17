@@ -1,0 +1,37 @@
+  - hosts: cluster
+    roles:
+      - cluster
+    vars:
+     ntp_host: '192.168.10.1'
+
+     node01_ip: 'node01'
+     node02_ip: 'node02'
+
+     node01_hostname: 'node01'
+     node02_hostname: 'node02'
+     
+     # replication
+     repl_user: 'replicator'
+     repl_pass: 'replicator'
+     
+     # pacemaker
+     selinux_state: 'permissive'
+     pacemaker_cluster_name: 'cluster'
+     pacemaker_user: 'hacluster'
+     pacemaker_password: 'hacluster'
+     stonith_status: 'false'
+     stickiness: '100'
+     quorum_policy: 'ignore'
+
+     # ClusterIP
+     cluster_ip: '192.168.10.50'
+     cluster_netmask: '32'
+     cluster_interval: '10'
+
+     # MySQL
+     mysql_interval: '10'
+
+     # root
+     root_user: 'root'
+     root_password: 'q1w2e3!'
+     root_host: 'localhost'

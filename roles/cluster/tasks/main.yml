@@ -1,0 +1,33 @@
+---
+  - name: install epel repo
+    yum: name=epel-release
+
+  - name: upgrade all packages
+    yum: name=* state=latest
+
+  - name: install recommended packages
+    yum: name={{ item }}
+    with_items:
+    - libselinux-python
+    - policycoreutils-python
+    - nano
+    - bash-completion
+    - net-tools
+    - wget
+    - curl
+    - lsof
+    - tcpdump
+    - telnet
+    - nmap
+    - nc
+    - htop
+    - mc
+    - ntp
+    - rsync
+    - mlocate
+    - pacemaker 
+    - pcs
+    - psmisc
+
+  - name: selinux -> permissive
+    selinux: policy=targeted state={{ selinux_state }}
