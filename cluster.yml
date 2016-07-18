@@ -31,9 +31,15 @@
      # MySQL
      mysql_interval: '10'
 
+     # Nginx
+     nginx_interval: '10'
+
+     # PHP-FPM
+     php-fpm_interval: '10'
+
      # root
      root_user: 'root'
-     root_password: 'q1w2e3!'
+     root_password: 'GrzSYzUVxj3yGUrzRKkg'
      root_host: 'localhost'
 
      # wordpress
