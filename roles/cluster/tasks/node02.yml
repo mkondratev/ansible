@@ -1,0 +1,22 @@
+---
+  - name: Get Slave Status
+    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=getslave 
+    register: slave_status
+    ignore_errors: true
+
+  - name: Stop Slave
+    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=stopslave 
+    when: slave_status|failed or slave_status.Slave_SQL_Running != "Yes"
+
+  - name: Get Master Status
+    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=getmaster
+    register: master_status
+    ignore_errors: true
+
+  - name: Resync with Master 
+    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=changemaster master_host={{ node01_ip }} master_log_file={{ master_status.File }} master_log_pos={{ master_status.Position }} 
+    when: slave_status|failed or slave_status.Slave_SQL_Running != "Yes"
+
+  - name: Start Slave after resync
+    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=startslave
+    when: slave_status|failed or slave_status.Slave_SQL_Running != "Yes"

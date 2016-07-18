@@ -80,3 +80,18 @@
      password: "{{ repl_pass }}"
      priv: "*.*:replication slave"
      state: "present"
+
+  - name: setup node01
+    include: node01.yml
+    when: ansible_hostname == "{{ node01_hostname }}"
+
+  - name: setup node02
+    include: node02.yml
+    when: ansible_hostname == "{{ node02_hostname }}"
+
+  - name: setup databases
+    include: databases.yml
+    when: ansible_hostname == "{{ node01_hostname }}"
+
+  - name: setup users
+    include: users.yml

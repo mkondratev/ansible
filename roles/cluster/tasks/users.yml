@@ -1,0 +1,12 @@
+---
+# wordpress
+  - name: add or update mysql user wordpress
+    mysql_user:
+     name: "{{ wordpress_user }}"
+     host: "{{ wordpress_host }}"
+     password: "{{ wordpress_password }}"
+     login_user: "{{ root_user }}"
+     login_password: "{{ root_password }}"
+     check_implicit_admin: yes
+     append_privs: yes
+     priv: "{{ wordpress_database }}.*:ALL,GRANT"

@@ -25,8 +25,8 @@
 
      # ClusterIP
      cluster_ip: '192.168.10.50'
-     cluster_netmask: '32'
-     cluster_interval: '10'
+     cluster_ip_netmask: '32'
+     cluster_ip_interval: '10'
 
      # MySQL
      mysql_interval: '10'
@@ -35,3 +35,9 @@
      root_user: 'root'
      root_password: 'q1w2e3!'
      root_host: 'localhost'
+
+     # wordpress
+     wordpress_user: 'wordpress_user'
+     wordpress_host: 'localhost'
+     wordpress_password: 'SKQj69Bfm5TaBN7CG8AL'
+     wordpress_database: 'wordpress_database'
