@@ -44,7 +44,7 @@
     ignore_errors: true
 
   - name: create resource PHP-FPM
-    command: pcs resource create PHP-FPM systemd:php-fpm op monitor interval={{ php-fpm_interval }}s --force
+    command: pcs resource create PHP-FPM systemd:php-fpm op monitor interval={{ phpfpm_interval }}s --force
     ignore_errors: true
 
   - name: add Nginx and PHP-FPM in Web group
