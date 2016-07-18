@@ -1,2 +1,9 @@
-# ansible
-ansible-playbook
+# Wordpress кластер
+
+Системные требования:
+Операционная система: Centos 7.2 x64
+
+Nginx и php-fpm управляются с помощью pacemaker.
+База данных в режиме Master-Master.
+
+Пока не придумал как синхронизировать каталог /var/www/wordpress между нодами. Скорее всего будет drbd или rsync.
