@@ -1,6 +1,6 @@
 ## Web hacluster
 
-#### Operation system
+#### Operating system
 - Centos 7
 
 #### Servers
