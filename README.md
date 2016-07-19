@@ -1,3 +1,8 @@
-# Wordpress cluster
+# Web cluster
 
-Centos 7
+OS: Centos 7
+Servers: node01 + node02
+Soft (web): nginx + php-fpm + mariadb (master-master) + wordpress
+Soft (cluster): pacemaker + corosync + drbd (maybe)
+
+In progress...
