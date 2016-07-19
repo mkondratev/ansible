@@ -18,4 +18,6 @@
 - corosync
 - drbd (maybe)
 
+	ansible-playbook cluster.yml
+
 In progress...
