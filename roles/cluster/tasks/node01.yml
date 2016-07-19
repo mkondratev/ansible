@@ -4,11 +4,11 @@
     register: pacemaker_status
 
   - name: authenticate all nodes
-    command: pcs cluster auth {{ node01_ip }} {{ node02_ip }} -u {{ pacemaker_user }} -p {{ pacemaker_password }}
+    command: pcs cluster auth {{ node01 }} {{ node02 }} -u {{ pacemaker_user }} -p {{ pacemaker_password }}
     when: pacemaker_status.stat.exists == false
 
   - name: setup cluster message bus
-    command: pcs cluster setup --name {{ pacemaker_cluster_name }} {{ node01_ip }} {{ node02_ip }} --force
+    command: pcs cluster setup --name {{ pacemaker_cluster_name }} {{ node01 }} {{ node02 }} --force
     when: pacemaker_status.stat.exists == false
 
   - name: start all cluster nodes
@@ -36,7 +36,7 @@
     pause: seconds=3
 
   - name: create resource ClusterIP
-    command: pcs resource create ClusterIP ocf:heartbeat:IPaddr2 ip={{ cluster_ip }} cidr_netmask={{ cluster_ip_netmask }} op monitor interval={{ cluster_ip_interval }}s --force
+    command: pcs resource create ClusterIP ocf:heartbeat:IPaddr2 ip={{ clusterip }} cidr_netmask={{ clusterip_netmask }} op monitor interval={{ clusterip_interval }}s --force
     ignore_errors: true
 
   - name: create resource Nginx
@@ -63,23 +63,23 @@
     file: path=/root/pacemaker.already.setup state=touch owner=root group=root mode=0600
 
   - name: Get Slave Status
-    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=getslave 
+    mysql_replication: master_user={{ mysql_replication_user }} master_password={{ mysql_replication_password }} mode=getslave 
     register: slave_status
     ignore_errors: true
 
   - name: Stop Slave
-    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=stopslave
+    mysql_replication: master_user={{ mysql_replication_user }} master_password={{ mysql_replication_password }} mode=stopslave
     when: slave_status|failed or slave_status.Slave_SQL_Running != "Yes"
 
   - name: Get Master Status
-    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=getmaster
+    mysql_replication: master_user={{ mysql_replication_user }} master_password={{ mysql_replication_password }} mode=getmaster
     register: master_status
     ignore_errors: true
 
   - name: Resync with Master 
-    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=changemaster master_host={{ node02_ip }} master_log_file={{ master_status.File }} master_log_pos={{ master_status.Position }}
+    mysql_replication: master_user={{ mysql_replication_user }} master_password={{ mysql_replication_password }} mode=changemaster master_host={{ node02 }} master_log_file={{ master_status.File }} master_log_pos={{ master_status.Position }}
     when: slave_status|failed or slave_status.Slave_SQL_Running != "Yes" 
 
   - name: Start Slave after resync
-    mysql_replication: master_user={{ repl_user }} master_password={{ repl_pass }} mode=startslave
+    mysql_replication: master_user={{ mysql_replication_user }} master_password={{ mysql_replication_password }} mode=startslave
     when: slave_status|failed or slave_status.Slave_SQL_Running != "Yes"

@@ -59,11 +59,11 @@
 
   - name: update mysql root password
     mysql_user: 
-     name: "{{ root_user }}"
+     name: "{{ mysql_root_user }}"
      host: "{{ item }}"
-     password: "{{ root_password }}"
-     login_user: "{{ root_user }}"
-     login_password: "{{ root_password }}"
+     password: "{{ mysql_root_password }}"
+     login_user: "{{ mysql_root_user }}"
+     login_password: "{{ mysql_root_password }}"
      check_implicit_admin: "yes" 
      priv: "*.*:ALL,GRANT" 
      state: "present"
@@ -75,23 +75,23 @@
 
   - name: add mysql user replicator
     mysql_user:
-     name: "{{ repl_user }}"
-     host: "%"
-     password: "{{ repl_pass }}"
+     name: "{{ mysql_replication_user }}"
+     host: "{{ mysql_replication_host }}"
+     password: "{{ mysql_replication_password }}"
      priv: "*.*:replication slave"
      state: "present"
 
   - name: setup node01
     include: node01.yml
-    when: ansible_hostname == "{{ node01_hostname }}"
+    when: ansible_hostname == "{{ node01 }}"
 
   - name: setup node02
     include: node02.yml
-    when: ansible_hostname == "{{ node02_hostname }}"
+    when: ansible_hostname == "{{ node02 }}"
 
   - name: setup databases
     include: databases.yml
-    when: ansible_hostname == "{{ node01_hostname }}"
+    when: ansible_hostname == "{{ node01 }}"
 
   - name: setup users
     include: users.yml

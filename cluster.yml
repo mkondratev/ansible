@@ -2,48 +2,47 @@
     roles:
       - cluster
     vars:
-     ntp_host: '192.168.10.1'
+     ntp_host: '192.168.1.1'
 
-     node01_ip: 'node01'
-     node02_ip: 'node02'
+     # hosts
+     node01: 'node01'
+     node02: 'node02'
 
-     node01_hostname: 'node01'
-     node02_hostname: 'node02'
+     # MySQL
+     mysql_interval: '10'
+
+     # MySQL users
+     mysql_replication_user: 'replicator'
+     mysql_replication_password: '4iSE2qZNOwu2eWdcUO3m'
+     mysql_replication_host: '%'
+
+     mysql_root_user: 'root'
+     mysql_root_password: 'jFSCunEhFGu5uQSabAHZ'
+     mysql_root_host: 'localhost'
+
+     mysql_wordpress_user: 'wpuser'
+     mysql_wordpress_host: 'localhost'
+     mysql_wordpress_password: 'SKQj69Bfm5TaBN7CG8AL'
+     mysql_wordpress_database: 'wpbase'
      
-     # replication
-     repl_user: 'replicator'
-     repl_pass: 'replicator'
-     
-     # pacemaker
+     # linux
      selinux_state: 'permissive'
+
+     # pacemaker
      pacemaker_cluster_name: 'cluster'
      pacemaker_user: 'hacluster'
-     pacemaker_password: 'hacluster'
+     pacemaker_password: 'oET3lvliC0Btqm4h7zfn'
      stonith_status: 'false'
      stickiness: '100'
      quorum_policy: 'ignore'
 
      # ClusterIP
-     cluster_ip: '192.168.10.50'
-     cluster_ip_netmask: '32'
-     cluster_ip_interval: '10'
-
-     # MySQL
-     mysql_interval: '10'
+     clusterip: '192.168.1.100'
+     clusterip_netmask: '32'
+     clusterip_interval: '10'
 
      # Nginx
      nginx_interval: '10'
 
      # PHP-FPM
      phpfpm_interval: '10'
-
-     # root
-     root_user: 'root'
-     root_password: 'q1w2e3!'
-     root_host: 'localhost'
-
-     # wordpress
-     wordpress_user: 'wordpress_user'
-     wordpress_host: 'localhost'
-     wordpress_password: 'SKQj69Bfm5TaBN7CG8AL'
-     wordpress_database: 'wordpress_database'
