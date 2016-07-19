@@ -9,7 +9,7 @@
      node02: 'node02'
 
      # MySQL
-     mysql_interval: '10'
+     mysql_int: '10'
 
      # MySQL users
      mysql_replication_user: 'replicator'
@@ -29,20 +29,20 @@
      selinux_state: 'permissive'
 
      # pacemaker
-     pacemaker_cluster_name: 'cluster'
-     pacemaker_user: 'hacluster'
+     pacemaker_cluster_name: 'hacluster'
+     pacemaker_user: 'pacemaker'
      pacemaker_password: 'oET3lvliC0Btqm4h7zfn'
      stonith_status: 'false'
      stickiness: '100'
      quorum_policy: 'ignore'
 
      # ClusterIP
-     clusterip: '192.168.1.100'
-     clusterip_netmask: '32'
-     clusterip_interval: '10'
+     ip: '192.168.1.100'
+     ip_netmask: '32'
+     ip_int: '10'
 
      # Nginx
-     nginx_interval: '10'
+     nginx_int: '10'
 
      # PHP-FPM
-     phpfpm_interval: '10'
+     fpm_int: '10'
