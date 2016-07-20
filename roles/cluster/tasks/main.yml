@@ -2,6 +2,12 @@
   - name: install epel repo
     yum: name=epel-release
 
+  - name: add nginx repository
+    yum_repository:
+     name: nginx repo
+     description: nginx repo
+     baseurl: http://nginx.org/packages/centos/7/$basearch/
+
   - name: upgrade all packages
     yum: name=* state=latest
 
@@ -30,6 +36,8 @@
     - psmisc
     - mariadb-server
     - MySQL-python
+    - nginx
+    - php-fpm
 
   - name: selinux -> permissive
     selinux: policy=targeted state={{ selinux_state }}
