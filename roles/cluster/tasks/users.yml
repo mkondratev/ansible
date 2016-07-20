@@ -8,11 +8,11 @@
      - ::1
      - localhost
      password: "{{ mysql_root_password }}"
-     login_user: "{{ mysql_root_user }}"
-     login_password: "{{ mysql_root_password }}"
-     check_implicit_admin: "yes" 
      priv: "*.*:ALL,GRANT" 
      state: "present"
+     login_user: "{{ mysql_root_user }}"
+     login_password: "{{ mysql_root_password }}"
+     check_implicit_admin: "yes"
 
   - name: add mysql user replicator
     mysql_user:
@@ -21,6 +21,9 @@
      password: "{{ mysql_replication_password }}"
      priv: "*.*:replication slave"
      state: "present"
+     login_user: "{{ mysql_root_user }}"
+     login_password: "{{ mysql_root_password }}"
+     check_implicit_admin: "yes"
 
   - name: add or update mysql user wordpress
     mysql_user:
@@ -29,3 +32,7 @@
      password: "{{ mysql_wordpress_password }}"
      priv: "{{ mysql_wordpress_database }}.*:ALL,GRANT"
      state: "present"
+     login_user: "{{ mysql_root_user }}"
+     login_password: "{{ mysql_root_password }}"
+     check_implicit_admin: "yes"
+
