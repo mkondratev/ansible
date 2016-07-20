@@ -59,28 +59,8 @@
   - name: change pacemaker password
     user: name={{ pacemaker_user }} password={{ pacemaker_password | password_hash( 'sha512', ansible_hostname ) }}
 
-  - name: update mysql root password
-    mysql_user: 
-     name: "{{ mysql_root_user }}"
-     hosts:
-     - "{{ ansible_hostname }}"
-     - 127.0.0.1
-     - ::1
-     - localhost
-     password: "{{ mysql_root_password }}"
-     login_user: "{{ mysql_root_user }}"
-     login_password: "{{ mysql_root_password }}"
-     check_implicit_admin: "yes" 
-     priv: "*.*:ALL,GRANT" 
-     state: "present"
-
-  - name: add mysql user replicator
-    mysql_user:
-     name: "{{ mysql_replication_user }}"
-     host: "{{ mysql_replication_host }}"
-     password: "{{ mysql_replication_password }}"
-     priv: "*.*:replication slave"
-     state: "present"
+  - name: setup mysql users
+    include: users.yml
 
   - name: setup node01
     include: node01.yml
@@ -93,6 +73,3 @@
   - name: setup databases
     include: databases.yml
     when: ansible_hostname == "{{ node01 }}"
-
-  - name: setup users
-    include: users.yml
