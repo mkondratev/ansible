@@ -2,20 +2,22 @@
   - name: install epel repo
     yum: name=epel-release
 
-  - name: add nginx repository
-    yum_repository:
-     name: nginx repo
-     description: nginx repo
-     baseurl: http://nginx.org/packages/centos/7/$basearch/
-
-  - name: upgrade all packages
-    yum: name=* state=latest
-
-  - name: install recommended packages
+  - name: install needed packages
     yum: name={{ item }}
     with_items:
     - libselinux-python
     - policycoreutils-python
+    - pacemaker
+    - pcs
+    - psmisc
+    - mariadb-server
+    - MySQL-python
+    - nginx
+    - php-fpm
+
+  - name: install additional packages
+    yum: name={{ item }}
+    with_items:
     - nano
     - bash-completion
     - net-tools
@@ -31,13 +33,7 @@
     - ntp
     - rsync
     - mlocate
-    - pacemaker 
-    - pcs
-    - psmisc
-    - mariadb-server
-    - MySQL-python
-    - nginx
-    - php-fpm
+    when: {{ additional_packages }} = yes
 
   - name: selinux -> permissive
     selinux: policy=targeted state={{ selinux_state }}
