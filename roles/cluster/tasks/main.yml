@@ -70,6 +70,6 @@
     include: node02.yml
     when: ansible_hostname == "{{ node02 }}"
 
-  - name: setup databases
+  - name: setup mysql databases
     include: databases.yml
     when: ansible_hostname == "{{ node01 }}"
