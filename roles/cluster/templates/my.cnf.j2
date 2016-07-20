@@ -20,7 +20,7 @@ log-bin-index = /var/log/mariadb/server-bin.index
 relay-log = /var/log/mariadb/slave-relay-bin
 relay-log-index = /var/log/mariadb/slave-relay-bin.index
 
-replicate-do-db = wordpress_database
+replicate-do-db = {{ mysql_wordpress_database }}
 
 binlog-ignore-db = information_schema
 binlog-ignore-db = mysql
