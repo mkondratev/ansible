@@ -43,6 +43,3 @@
 
      # Php-fpm
      fpm_int: '10'
-
-     # MySQL
-     mysql_int: '10'
