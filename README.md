@@ -16,6 +16,6 @@
 #### Soft (cluster)
 - pacemaker
 - corosync
-- drbd (maybe)
+- lsyncd
 
 In progress...
