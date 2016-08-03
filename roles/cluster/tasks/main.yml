@@ -34,7 +34,6 @@
     - ntp
     - rsync
     - mlocate
-    when: {{ additional_packages }} = yes
 
   - name: selinux -> permissive
     selinux: policy=targeted state={{ selinux_state }}

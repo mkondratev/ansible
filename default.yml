@@ -22,7 +22,6 @@
      mysql_wordpress_database: 'wpbase'
      
      # Linux
-     additional_packages: 'yes'
      selinux_state: 'permissive'
 
      # Pacemaker
