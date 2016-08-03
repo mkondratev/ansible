@@ -54,6 +54,17 @@
 #  - name: copy .my.cnf file with root password credentials
 #    template: src=root/my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
 
+  - name: generate ssh key
+    user: name=root generate_ssh_key=yes
+
+  - name: copy ssh pub from node01 to node02
+    command: sshpass -p {{ root_password }} ssh-copy-id {{ node02 }}
+    when: ansible_hostname == "{{ node01 }}"
+
+  - name: copy ssh pub from node02 to node01
+    command: sshpass -p {{ root_password }} ssh-copy-id {{ node01 }}
+    when: ansible_hostname == "{{ node02 }}"
+
   - name: enable and start mariadb/pcs service
     service: name={{ item }} enabled=yes state=started
     with_items:

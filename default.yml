@@ -22,12 +22,13 @@
      mysql_wordpress_database: 'wpbase'
      
      # Linux
+     root_password: '4iSE2qZNOwu2eWdcUO3m'
      selinux_state: 'permissive'
 
      # Pacemaker
      pacemaker_cluster_name: 'hacluster'
      pacemaker_user: 'pacemaker'
-     pacemaker_password: 'oET3lvliC0Btqm4h7zfn'
+     pacemaker_password: '4iSE2qZNOwu2eWdcUO3m'
      stonith_status: 'false'
      stickiness: '100'
      quorum_policy: 'ignore'
