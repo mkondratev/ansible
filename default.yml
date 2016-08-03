@@ -43,3 +43,6 @@
 
      # Php-fpm
      fpm_int: '5'
+
+     # Lsyncd
+     lsyncd_int: '5'

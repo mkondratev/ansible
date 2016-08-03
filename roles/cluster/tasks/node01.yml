@@ -47,8 +47,12 @@
     command: pcs resource create Php-fpm systemd:php-fpm op monitor interval={{ fpm_int }}s --force
     ignore_errors: true
 
+  - name: create resource Lsyncd
+    command: pcs resource create Lsyncd systemd:lsyncd op monitor interval={{ lsyncd_int }}s --force
+    ignore_errors: true    
+
   - name: add Nginx and Php-fpm in Web group
-    command: pcs resource group add Web Nginx Php-fpm
+    command: pcs resource group add Web Nginx Php-fpm Lsyncd
     ignore_errors: yes
 
   - name: setup colocation

@@ -14,6 +14,7 @@
     - MySQL-python
     - nginx
     - php-fpm
+    - lsyncd
 
   - name: install additional packages
     yum: name={{ item }}
@@ -43,6 +44,14 @@
     notify:
     - restart mariadb
 
+  - name: upload config lsyncd
+    template: src=lsyncd.conf.j2 dest=/etc/lsyncd.conf owner=root group=root
+    notify:
+    - restart lsyncd
+
+  - name: create lsyncd log directory
+    file: path=/var/log/lsyncd state=directory mode=0755
+
 #  - name: copy .my.cnf file with root password credentials
 #    template: src=root/my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
 
@@ -51,6 +60,7 @@
     with_items:
     - mariadb
     - pcsd
+    - lsyncd
 
   - name: change pacemaker password
     user: name={{ pacemaker_user }} password={{ pacemaker_password | password_hash( 'sha512', ansible_hostname ) }}

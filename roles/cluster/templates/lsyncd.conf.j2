@@ -1,0 +1,62 @@
+settings {
+	logfile    = "/var/log/lsyncd/lsyncd.log",
+        statusFile = "/var/log/lsyncd/lsyncd.status",
+        nodaemon   = true
+}
+
+sync {
+      	default.rsyncssh,
+        source="/var/www",
+{% if '01' in inventory_hostname %}
+        host="sdf02",
+{% else %}
+        host-"sdf01"
+{% endif %}
+        targetdir="/var/www",
+        delay=1,
+        rsync = {
+                compress = true,
+                acls = true,
+                verbose = true,
+                owner = true,
+                group = true
+        }
+}
+
+sync {
+      	default.rsyncssh,
+        source="/etc/nginx",
+{% if '01' in inventory_hostname %}
+        host="sdf02",
+{% else %}
+        host-"sdf01"
+{% endif %}
+        targetdir="/etc/nginx",
+        delay=1,
+        rsync = {
+                compress = true,
+                acls = true,
+                verbose = true,
+                owner = true,
+                group = true
+        }
+}
+
+sync {
+      	default.rsyncssh,
+        source="/etc/php-fpm.d",
+{% if '01' in inventory_hostname %}
+        host="sdf02",
+{% else %}
+        host-"sdf01"
+{% endif %}
+        targetdir="/etc/php-fpm.d",
+        delay=1,
+        rsync = {
+                compress = true,
+                acls = true,
+                verbose = true,
+                owner = true,
+                group = true
+        }
+}

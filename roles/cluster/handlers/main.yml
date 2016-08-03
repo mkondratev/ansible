@@ -1,2 +1,6 @@
 - name: restart mariadb
   service: name=mariadb state=restarted
+
+- name: restart lsyncd
+  service: name=lsyncd state=restarted
+
