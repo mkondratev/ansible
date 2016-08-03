@@ -8,7 +8,7 @@
     when: pacemaker_status.stat.exists == false
 
   - name: setup cluster message bus
-    command: pcs cluster setup --name {{ pacemaker_cluster_name }} {{ node01 }} {{ node02 }} --force
+    command: pcs cluster setup --name {{ pacemaker_cluster_name }} {{ node01 }} {{ node02 }}
     when: pacemaker_status.stat.exists == false
 
   - name: start all cluster nodes
